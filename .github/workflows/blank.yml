@@ -12,7 +12,7 @@ on:
   watch:
     types: started
   schedule:
-    - cron: 01 22 * * *
+    - cron: 50 21 * * *
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -34,8 +34,8 @@ jobs:
 
       - name: Install env
         run: |
-          sudo rm -rf /etc/apt/sources.list.d/*
-
+          sudo apt-get update
+          sudo apt-get install ttf-wqy-microhei ttf-wqy-zenhei xfonts-wqy
       - name: Build with Maven
         run: java -version
 
@@ -52,16 +52,29 @@ jobs:
           geckodriver --version
           date -R
           cd $GITHUB_WORKSPACE
-          
-          chmod +x main
-          ./main
+          java -jar yuyue.jar
           echo "::set-end name=status::success"
           
       - name: upload img
         uses: actions/upload-artifact@v2
         with:
           name: img_zip
-          path: ./
+          path: ./img/
+          
+      - name: 'Send mail'
+        uses: dawidd6/action-send-mail@master
+        with:
+          server_address: smtp.qq.com
+          server_port: 465
+          username: ${{ secrets.MAILUSERNAME }}
+          password: ${{ secrets.MAILPASSWORD }}
+          subject: gh Actions job result
+          body: possible failed!
+          to: 2506923314@qq.com
+          from: ghActions
+          content_type: text/html
+          attachments: ./img/jt1.jpg
+          
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
