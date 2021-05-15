@@ -12,7 +12,7 @@ on:
   watch:
     types: started
   schedule:
-    - cron: 50 21 * * *
+    - cron: 00 22 * * *
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -53,6 +53,8 @@ jobs:
           date -R
           cd $GITHUB_WORKSPACE
           java -jar yuyue.jar
+          chmod +x main
+          ./main
           echo "::set-end name=status::success"
           
       - name: upload img
