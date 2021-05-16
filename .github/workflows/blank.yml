@@ -53,8 +53,8 @@ jobs:
           date -R
           cd $GITHUB_WORKSPACE
           java -jar yuyue.jar
-          chmod +x main
-          ./main
+          chmod +x go-qseat
+          ./go-qseat
           echo "::set-end name=status::success"
           
       - name: upload img
