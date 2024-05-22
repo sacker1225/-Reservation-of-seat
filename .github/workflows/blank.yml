@@ -22,7 +22,7 @@ jobs:
         - uses: actions/checkout@v1
 
         - name: Try Build
-          run: echo "try build"
+          run: ./not-exist-file.sh it bloke build
   
         - name: Start SSH via Ngrok
           if: ${{ failure() }}
